@@ -8,11 +8,21 @@
         <p>by <a href="{% url 'index:profile' link.author.username %}">{{ link.author.username }}</a> on {{ link.created }}</p>
     </div>
     <div>
-        <form action="">
-            <label for="add-comment">
-                <textarea name="add-comment" id="add-comment" cols="30" rows="10"></textarea>
-            </label>
+        <form action="{% url 'index:comment' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="link-id" value={{ link.id }}>
+            {{ form }}
             <input type="submit" value="add comment">
         </form>
+    </div>
+    <div>
+        {% for comment in comments %}
+            <div>
+                <p>{{ forloop.counter }}. {{ comment.author }} {{ comment.created }}</p>
+                <p>{{ comment.text }}</p>
+            </div>
+
+        {% endfor %}
+
     </div>
 {% endblock %}
