@@ -19,6 +19,7 @@ class Link(models.Model):
 
     Change to Thread model to support url and text threads.
     """
+
     url = models.URLField()
     text = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
@@ -39,7 +40,7 @@ class Comment(models.Model):
     """
 
     link = models.ForeignKey(Link, on_delete=models.CASCADE)
-    text = models.CharField(max_length=200)
+    text = models.TextField(max_length=1000)
     created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
