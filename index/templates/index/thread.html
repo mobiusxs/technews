@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.text }}{% endblock %}
+
+{% block content %}
+    <div>
+        <p><a href="{{ link.url }}">{{ link.text }}</a></p>
+        <p>by {{ link.author.username }} on {{ link.created }}</p>
+    </div>
+    <div>
+        <form action="">
+            <label for="add-comment">
+                <textarea name="add-comment" id="add-comment" cols="30" rows="10"></textarea>
+            </label>
+            <input type="submit" value="add comment">
+        </form>
+    </div>
+{% endblock %}
