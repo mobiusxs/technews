@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.urls import reverse
 
-from .models import Link, Profile
+from .forms import CommentForm
+from .models import Link, Profile, Comment
 
 
 class IndexView(ListView):
@@ -15,6 +16,13 @@ class IndexView(ListView):
 class ThreadView(DetailView):
     template_name = 'index/thread.html'
     model = Link
+
+    def get_context_data(self, **kwargs):
+        """Insert the single object into the context dict."""
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        context['comments'] = Comment.objects.filter(link__id=self.object.id)
+        return context
 
 
 class ProfileView(DetailView):
@@ -40,3 +48,17 @@ class SubmitView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('index:thread', kwargs={'pk': self.object.id})
+
+
+class CommentFormView(FormView):
+    form_class = CommentForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.author = self.request.user
+        self.object.link = get_object_or_404(Link, id=self.request.POST['link-id'])
+        form.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('index:thread', kwargs={'pk': self.object.link.id})
