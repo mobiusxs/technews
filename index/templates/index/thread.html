@@ -5,7 +5,7 @@
 {% block content %}
     <div>
         <p><a href="{{ link.url }}">{{ link.text }}</a></p>
-        <p>by {{ link.author.username }} on {{ link.created }}</p>
+        <p>by <a href="{% url 'index:profile' link.author.id %}">{{ link.author.username }}</a> on {{ link.created }}</p>
     </div>
     <div>
         <form action="">
