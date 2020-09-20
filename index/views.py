@@ -9,6 +9,7 @@ from .models import Link, Profile
 class IndexView(ListView):
     template_name = 'index/index.html'
     model = Link
+    paginate_by = 10
 
 
 class ThreadView(DetailView):
