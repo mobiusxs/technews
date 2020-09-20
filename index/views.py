@@ -1,5 +1,6 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView
-from django.urls import reverse, reverse_lazy, resolve, re_path
+from django.urls import reverse
 
 from .models import Link, Profile
 
@@ -19,10 +20,16 @@ class ProfileView(DetailView):
     model = Profile
 
 
-class SubmitView(CreateView):
+class SubmitView(LoginRequiredMixin, CreateView):
     template_name = 'index/submit.html'
     model = Link
-    fields = '__all__'
+    fields = ['url', 'text']
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.author = self.request.user
+        form.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('index:thread', args=[self.object.id])
+        return reverse('index:thread', kwargs={'pk': self.object.id})
