@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView
 from django.urls import reverse
 
@@ -18,6 +19,11 @@ class ThreadView(DetailView):
 class ProfileView(DetailView):
     template_name = 'index/profile.html'
     model = Profile
+
+    def get_object(self, queryset=None):
+        username = self.kwargs.get('username')
+        profile = get_object_or_404(Profile, user__username=username)
+        return profile
 
 
 class SubmitView(LoginRequiredMixin, CreateView):
