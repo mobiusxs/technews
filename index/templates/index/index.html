@@ -5,7 +5,7 @@
 {% block content %}
     {% for link in object_list %}
         <div>
-            <p>{{ forloop.counter }}. <a href="{{ link.url }}">{{ link.text }}</a></p>
+            <p>{{ forloop.counter0|add:page_obj.start_index }}. <a href="{{ link.url }}">{{ link.text }}</a></p>
             <p>by <a href="{% url 'index:profile' link.author.username %}">{{ link.author.username }}</a> on {{ link.created }}. <a href="{% url 'index:thread' link.id %}">comments</a></p>
         </div>
     {% empty %}
