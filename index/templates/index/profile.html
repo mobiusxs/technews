@@ -13,12 +13,10 @@
                 <label for="about">
                     <textarea name="about" id="about" placeholder="about" cols="30" rows="10"></textarea>
                 </label>
-                <label for="email">
-                    <input type="email" placeholder="email" value="{{ user.email }}">
-                </label>
                 <input type="submit" value="update">
             </form>
             <p><a href="{% url 'account_change_password' %}">change password</a></p>
+            <p><a href="{% url 'account_email' %}">manage email</a></p>
             <p><a href="{% url 'index:links' %}?username={{ user.username }}">links</a></p>
             <p><a href="{% url 'index:newcomments' %}?username={{ user.username }}">comments</a></p>
         </div>
