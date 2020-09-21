@@ -81,13 +81,16 @@ class CommentFormView(FormView):
         return reverse('index:thread', kwargs={'pk': self.object.link.id})
 
 
-class NewCommentListView(ListView):
+class CommentListView(ListView):
     template_name = 'index/comments.html'
     model = Comment
     paginate_by = 10
 
     def get_queryset(self):
         username = self.request.GET.get('username')
+        # Use default if o=None or invalid
+        ordering = ORDERING.get(self.request.GET.get('o', ''), '-created')
         if username:
-            return Comment.objects.filter(author__username=username).order_by('-created')
-        return Comment.objects.all().order_by('-created')
+            return Comment.objects.filter(author__username=username).order_by(ordering)
+        else:
+            return Comment.objects.all().order_by(ordering)
