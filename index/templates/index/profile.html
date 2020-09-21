@@ -17,8 +17,8 @@
             </form>
             <p><a href="{% url 'account_change_password' %}">change password</a></p>
             <p><a href="{% url 'account_email' %}">manage email</a></p>
-            <p><a href="{% url 'index:links' %}?username={{ user.username }}">links</a></p>
-            <p><a href="{% url 'index:comments' %}?username={{ user.username }}">comments</a></p>
+            <p><a href="{% url 'index:links' %}?u={{ user.username }}">links</a></p>
+            <p><a href="{% url 'index:comments' %}?u={{ user.username }}">comments</a></p>
         </div>
     {% else %}
         <div>
@@ -26,8 +26,8 @@
             <p>created: {{ object.user.date_joined }}</p>
             <p>karma: {{ object.karma }}</p>
             <p>about: {{ object.about }}</p>
-            <p><a href="{% url 'index:links' %}?username={{ object.user.username }}">links</a></p>
-            <p><a href="{% url 'index:comments' %}?username={{ object.user.username }}">comments</a></p>
+            <p><a href="{% url 'index:links' %}?u={{ object.user.username }}">links</a></p>
+            <p><a href="{% url 'index:comments' %}?u={{ object.user.username }}">comments</a></p>
         </div>
     {% endif %}
 {% endblock %}

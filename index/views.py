@@ -20,7 +20,7 @@ class LinkListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        username = self.request.GET.get('username')
+        username = self.request.GET.get('u')
         # Use default if o=None or invalid
         ordering = ORDERING.get(self.request.GET.get('o', ''), '-created')
         if username:
@@ -87,7 +87,7 @@ class CommentListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        username = self.request.GET.get('username')
+        username = self.request.GET.get('u')
         # Use default if o=None or invalid
         ordering = ORDERING.get(self.request.GET.get('o', ''), '-created')
         if username:
