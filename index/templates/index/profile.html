@@ -29,7 +29,7 @@
             <p>karma: {{ object.karma }}</p>
             <p>about: {{ object.about }}</p>
             <p><a href="#">submissions</a></p>
-            <p><a href="#">comments</a></p>
+            <p><a href="{% url 'index:newcomments' %}?username={{ object.user.username }}">comments</a></p>
         </div>
     {% endif %}
 {% endblock %}
