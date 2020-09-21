@@ -3,12 +3,11 @@
 {% block title %}{{ object.user.username }}{% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated and object.user.username == user.username %}
         <div>
-            <p>update form</p>
             <p>user: {{ object.user.username }}</p>
             <p>created: {{ object.user.date_joined }}</p>
             <p>karma: {{ object.karma }}</p>
+        {% if user.is_authenticated and object.user.username == user.username %}
             <form action="">
                 <label for="about">
                     <textarea name="about" id="about" placeholder="about" cols="30" rows="10"></textarea>
@@ -17,17 +16,10 @@
             </form>
             <p><a href="{% url 'account_change_password' %}">change password</a></p>
             <p><a href="{% url 'account_email' %}">manage email</a></p>
+        {% else %}
+            <p>about: {{ object.about }}</p>
+        {% endif %}
             <p><a href="{% url 'index:links' %}?u={{ user.username }}">links</a></p>
             <p><a href="{% url 'index:comments' %}?u={{ user.username }}">comments</a></p>
         </div>
-    {% else %}
-        <div>
-            <p>user: {{ object.user.username }}</p>
-            <p>created: {{ object.user.date_joined }}</p>
-            <p>karma: {{ object.karma }}</p>
-            <p>about: {{ object.about }}</p>
-            <p><a href="{% url 'index:links' %}?u={{ object.user.username }}">links</a></p>
-            <p><a href="{% url 'index:comments' %}?u={{ object.user.username }}">comments</a></p>
-        </div>
-    {% endif %}
 {% endblock %}
