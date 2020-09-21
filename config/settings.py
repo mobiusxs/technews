@@ -37,6 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    # 'allauth.socialaccount.providers.bitbucket',
+    # 'allauth.socialaccount.providers.github',
+    # 'allauth.socialaccount.providers.gitlab',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.stackexchange',
 
     'index.apps.IndexConfig',
 ]
@@ -101,6 +112,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+LOGIN_REDIRECT_URL = '/'
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
