@@ -2,7 +2,7 @@
     <nav>
         <a href="{% url 'index:index' %}">Tech News</a> |
         <a href="{% url 'index:links' %}?o=new">new</a> |
-        <a href="{% url 'index:newcomments' %}">comments</a> |
+        <a href="{% url 'index:comments' %}?o=new">comments</a> |
         <a href="{% url 'index:submit' %}">submit</a> |
         {% if user.is_authenticated %}
             <a href="{% url 'index:profile' user.username %}">{{ user.username }} ({{ user.profile.karma }})</a> | <a href="{% url 'account_logout' %}">logout</a>
