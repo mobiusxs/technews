@@ -8,18 +8,29 @@ from .forms import CommentForm
 from .models import Link, Profile, Comment
 
 
-class IndexView(ListView):
+ORDERING = {
+    'new': '-created',
+    'top': 'karma',
+}
+
+
+class LinkListView(ListView):
     template_name = 'index/links.html'
     model = Link
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = Link.objects.annotate(comment_count=Count('comment'))
-        queryset = queryset.order_by('-created')
-        return queryset
+        username = self.request.GET.get('username')
+        # Use default if o=None or invalid
+        ordering = ORDERING.get(self.request.GET.get('o', ''), '-created')
+        if username:
+            queryset = Link.objects.filter(author__username=username).annotate(comment_count=Count('comment')).order_by(ordering)
+            return queryset
+        else:
+            return Link.objects.annotate(comment_count=Count('comment')).order_by(ordering)
 
 
-class ThreadView(DetailView):
+class LinkDetailView(DetailView):
     template_name = 'index/thread.html'
     model = Link
 
@@ -68,19 +79,6 @@ class CommentFormView(FormView):
 
     def get_success_url(self):
         return reverse('index:thread', kwargs={'pk': self.object.link.id})
-
-
-class NewLinkListView(ListView):
-    template_name = 'index/links.html'
-    model = Link
-    paginate_by = 10
-
-    def get_queryset(self):
-        username = self.request.GET.get('username')
-        if username:
-            queryset = Link.objects.filter(author__username=username).annotate(comment_count=Count('comment')).order_by('-created')
-            return queryset
-        return Link.objects.annotate(comment_count=Count('comment')).order_by('-created')
 
 
 class NewCommentListView(ListView):
