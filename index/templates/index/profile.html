@@ -19,8 +19,8 @@
                 <input type="submit" value="update">
             </form>
             <p><a href="{% url 'account_change_password' %}">change password</a></p>
-            <p><a href="#">submissions</a></p>
-            <p><a href="#">comments</a></p>
+            <p><a href="{% url 'index:newlinks' %}?username={{ user.username }}">links</a></p>
+            <p><a href="{% url 'index:newcomments' %}?username={{ user.username }}">comments</a></p>
         </div>
     {% else %}
         <div>
