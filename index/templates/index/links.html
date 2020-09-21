@@ -9,7 +9,7 @@
             <p>
                 by <a href="{% url 'index:profile' link.author.username %}">{{ link.author.username }}</a> |
                 {{ link.created|timesince }} ago |
-                <a href="{% url 'index:thread' link.id %}">
+                <a href="{% url 'index:link' link.id %}">
                     {% if link.comment_count == 0 %}
                         discuss
                     {% elif link.comment_count == 1 %}

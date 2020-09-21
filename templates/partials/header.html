@@ -1,7 +1,7 @@
 <header>
     <nav>
         <a href="{% url 'index:index' %}">Tech News</a> |
-        <a href="{% url 'index:newlinks' %}">new</a> |
+        <a href="{% url 'index:links' %}?o=new">new</a> |
         <a href="{% url 'index:newcomments' %}">comments</a> |
         <a href="{% url 'index:submit' %}">submit</a> |
         {% if user.is_authenticated %}

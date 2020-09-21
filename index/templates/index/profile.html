@@ -19,7 +19,7 @@
                 <input type="submit" value="update">
             </form>
             <p><a href="{% url 'account_change_password' %}">change password</a></p>
-            <p><a href="{% url 'index:newlinks' %}?username={{ user.username }}">links</a></p>
+            <p><a href="{% url 'index:links' %}?username={{ user.username }}">links</a></p>
             <p><a href="{% url 'index:newcomments' %}?username={{ user.username }}">comments</a></p>
         </div>
     {% else %}
@@ -28,7 +28,7 @@
             <p>created: {{ object.user.date_joined }}</p>
             <p>karma: {{ object.karma }}</p>
             <p>about: {{ object.about }}</p>
-            <p><a href="{% url 'index:newlinks' %}?username={{ object.user.username }}">links</a></p>
+            <p><a href="{% url 'index:links' %}?username={{ object.user.username }}">links</a></p>
             <p><a href="{% url 'index:newcomments' %}?username={{ object.user.username }}">comments</a></p>
         </div>
     {% endif %}
