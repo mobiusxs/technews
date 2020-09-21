@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.urls import reverse
@@ -11,6 +12,11 @@ class IndexView(ListView):
     template_name = 'index/links.html'
     model = Link
     paginate_by = 10
+
+    def get_queryset(self):
+        queryset = Link.objects.annotate(comment_count=Count('comment'))
+        queryset = queryset.order_by('-created')
+        return queryset
 
 
 class ThreadView(DetailView):
