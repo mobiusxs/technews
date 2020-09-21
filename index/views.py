@@ -78,8 +78,9 @@ class NewLinkListView(ListView):
     def get_queryset(self):
         username = self.request.GET.get('username')
         if username:
-            return Link.objects.filter(author__username=username).order_by('-created')
-        return Link.objects.all().order_by('-created')
+            queryset = Link.objects.filter(author__username=username).annotate(comment_count=Count('comment')).order_by('-created')
+            return queryset
+        return Link.objects.annotate(comment_count=Count('comment')).order_by('-created')
 
 
 class NewCommentListView(ListView):
