@@ -8,7 +8,7 @@ from .models import Link, Profile, Comment
 
 
 class IndexView(ListView):
-    template_name = 'index/index.html'
+    template_name = 'index/links.html'
     model = Link
     paginate_by = 10
 
@@ -62,6 +62,20 @@ class CommentFormView(FormView):
 
     def get_success_url(self):
         return reverse('index:thread', kwargs={'pk': self.object.link.id})
+
+
+class NewLinkListView(ListView):
+    template_name = 'index/links.html'
+    model = Link
+    paginate_by = 10
+
+    def get_queryset(self):
+        username = self.request.GET.get('username')
+        if username:
+            return Link.objects.filter(author__username=username).order_by('-created')
+        return Link.objects.all().order_by('-created')
+
+
 class NewCommentListView(ListView):
     template_name = 'index/comments.html'
     model = Comment

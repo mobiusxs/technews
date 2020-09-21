@@ -28,7 +28,7 @@
             <p>created: {{ object.user.date_joined }}</p>
             <p>karma: {{ object.karma }}</p>
             <p>about: {{ object.about }}</p>
-            <p><a href="#">submissions</a></p>
+            <p><a href="{% url 'index:newlinks' %}?username={{ object.user.username }}">links</a></p>
             <p><a href="{% url 'index:newcomments' %}?username={{ object.user.username }}">comments</a></p>
         </div>
     {% endif %}
