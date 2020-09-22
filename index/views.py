@@ -67,7 +67,7 @@ class SubmitView(LoginRequiredMixin, CreateView):
         return reverse('index:link', kwargs={'pk': self.object.id})
 
 
-class CommentFormView(FormView):
+class CommentFormView(LoginRequiredMixin, FormView):
     form_class = CommentForm
 
     def form_valid(self, form):
