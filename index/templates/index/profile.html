@@ -8,9 +8,10 @@
             <p>created: {{ object.user.date_joined }}</p>
             <p>karma: {{ object.karma }}</p>
         {% if user.is_authenticated and object.user.username == user.username %}
-            <form action="">
+            <form action="{% url 'index:update_about' %}" method="post">
+                {% csrf_token %}
                 <label for="about">
-                    <textarea name="about" id="about" placeholder="about" cols="30" rows="10"></textarea>
+                    <textarea name="about" id="about" placeholder="about" cols="30" rows="10">{{ object.user.profile.about }}</textarea>
                 </label>
                 <input type="submit" value="update">
             </form>
