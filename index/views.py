@@ -64,7 +64,7 @@ class SubmitView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('index:thread', kwargs={'pk': self.object.id})
+        return reverse('index:link', kwargs={'pk': self.object.id})
 
 
 class CommentFormView(FormView):
