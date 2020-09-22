@@ -3,6 +3,8 @@ from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 from .forms import CommentForm
 from .models import Link, Profile, Comment
@@ -94,3 +96,11 @@ class CommentListView(ListView):
             return Comment.objects.filter(author__username=username).order_by(ordering)
         else:
             return Comment.objects.all().order_by(ordering)
+
+
+@login_required
+def update_about(request):
+    p = Profile.objects.get(user__username=request.user.username)
+    p.about = request.POST.get('about')
+    p.save()
+    return HttpResponseRedirect(reverse('index:profile', kwargs={'username': request.user.username}))
