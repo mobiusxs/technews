@@ -116,9 +116,11 @@ class CommentUpdateView(UpdateView):
 
 class CommentDeleteView(DeleteView):
     model = Comment
-    success_url = '/'
     template_name = 'index/confirm.html'
     template_name_suffix = ''
+
+    def get_success_url(self):
+        return reverse('index:link', kwargs={'pk': self.object.link.id})
 
 
 @login_required
