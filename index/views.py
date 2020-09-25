@@ -47,7 +47,7 @@ class LinkDetailView(DetailView):
 class LinkDeleteView(DeleteView):
     model = Link
     success_url = '/'
-    template_name = 'index/confirm.html'
+    template_name = 'index/confirm_delete.html'
     template_name_suffix = ''
 
 
