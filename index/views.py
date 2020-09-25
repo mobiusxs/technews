@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, FormView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, FormView, DeleteView, UpdateView
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -103,6 +103,15 @@ class CommentListView(ListView):
             return Comment.objects.filter(author__username=username).order_by(ordering)
         else:
             return Comment.objects.all().order_by(ordering)
+
+
+class CommentUpdateView(UpdateView):
+    model = Comment
+    fields = ['text']
+    template_name_suffix = '_update'
+
+    def get_success_url(self):
+        return reverse('index:link', kwargs={'pk': self.object.link.id})
 
 
 class CommentDeleteView(DeleteView):
