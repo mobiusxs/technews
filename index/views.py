@@ -116,7 +116,7 @@ class CommentUpdateView(UpdateView):
 
 class CommentDeleteView(DeleteView):
     model = Comment
-    template_name = 'index/confirm.html'
+    template_name = 'index/confirm_delete.html'
     template_name_suffix = ''
 
     def get_success_url(self):
