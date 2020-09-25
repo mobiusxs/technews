@@ -1,7 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.views.generic import ListView, DetailView, CreateView, FormView, DeleteView
 from django.urls import reverse
 from django.http import HttpResponseRedirect
@@ -34,7 +33,7 @@ class LinkListView(ListView):
 
 
 class LinkDetailView(DetailView):
-    template_name = 'index/thread.html'
+    template_name = 'index/link.html'
     model = Link
 
     def get_context_data(self, **kwargs):
@@ -88,7 +87,7 @@ class CommentFormView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('index:thread', kwargs={'pk': self.object.link.id})
+        return reverse('index:link', kwargs={'pk': self.object.link.id})
 
 
 class CommentListView(ListView):
