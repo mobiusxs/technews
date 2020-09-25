@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}confirm delete{% endblock %}
+
+{% block content %}
+    <h1>confirm delete</h1>
+    {% if comment %}
+        <form action="{% url 'index:comment_delete' comment.id%}" method="post">
+            {% csrf_token %}
+        <input type="submit" value="confirm">
+    </form>
+
+    {% elif link %}
+        <form action="{% url 'index:link_delete' link.id%}" method="post">
+            {% csrf_token %}
+        <input type="submit" value="confirm">
+    </form>
+    {% endif %}
+{% endblock %}

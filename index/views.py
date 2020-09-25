@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, FormView
+from django.views.generic import ListView, DetailView, CreateView, FormView, DeleteView
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -42,6 +43,13 @@ class LinkDetailView(DetailView):
         context['form'] = CommentForm()
         context['comments'] = Comment.objects.filter(link__id=self.object.id)
         return context
+
+
+class LinkDeleteView(DeleteView):
+    model = Link
+    success_url = '/'
+    template_name = 'index/confirm.html'
+    template_name_suffix = ''
 
 
 class ProfileView(DetailView):
@@ -96,6 +104,13 @@ class CommentListView(ListView):
             return Comment.objects.filter(author__username=username).order_by(ordering)
         else:
             return Comment.objects.all().order_by(ordering)
+
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+    success_url = '/'
+    template_name = 'index/confirm.html'
+    template_name_suffix = ''
 
 
 @login_required
