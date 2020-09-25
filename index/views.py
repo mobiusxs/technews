@@ -50,6 +50,9 @@ class LinkDeleteView(DeleteView):
     template_name = 'index/confirm_delete.html'
     template_name_suffix = ''
 
+    def get_queryset(self):
+        return Link.objects.annotate(comment_count=Count('comment'))
+
 
 class ProfileView(DetailView):
     template_name = 'index/profile.html'
