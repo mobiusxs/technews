@@ -17,6 +17,11 @@
                     {% else %}
                         {{ link.comment_count }} comments
                     {% endif %}
+                {% if request.user == link.author %}
+                    |
+                    <a href="#">edit</a> |
+                    <a href="{% url 'index:link_delete' link.id %}">delete</a>
+                {% endif %}
                 </a>
             </p>
         </div>

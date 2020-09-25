@@ -5,7 +5,15 @@
 {% block content %}
     {% for comment in object_list %}
         <div>
-            <p><a href="{% url 'index:profile' comment.author.username %}">{{ comment.author.username }}</a> on {{ comment.created|timesince }} ago</p>
+            <p>
+                <a href="{% url 'index:profile' comment.author.username %}">{{ comment.author.username }}</a>
+                {{ comment.created|timesince }} ago
+                {% if request.user == comment.author %}
+                    |
+                    <a href="#">edit</a> |
+                    <a href="{% url 'index:comment_delete' comment.id %}">delete</a>
+                {% endif %}
+            </p>
             <p>{{ comment.text }}</p>
         </div>
     {% empty %}
