@@ -20,7 +20,7 @@
         {% else %}
             <p>about: {{ object.about }}</p>
         {% endif %}
-            <p><a href="{% url 'index:links' %}?u={{ user.username }}">links</a></p>
-            <p><a href="{% url 'index:comments' %}?u={{ user.username }}">comments</a></p>
+            <p><a href="{% url 'index:links' %}?u={{ object.user.username }}">links</a></p>
+            <p><a href="{% url 'index:comments' %}?u={{ object.user.username }}">comments</a></p>
         </div>
 {% endblock %}
