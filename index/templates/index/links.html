@@ -17,11 +17,13 @@
                     {% else %}
                         {{ link.comment_count }} comments
                     {% endif %}
-                {% if request.user == link.author %}
-                    |
-                    <a href="{% url 'index:link_delete' link.id %}">delete</a>
-                {% endif %}
                 </a>
+                {% if request.user == link.author %}
+                    | <a href="{% url 'index:link_delete' link.id %}">delete</a>
+                {% else %}
+                    | <button data-type="link" data-id="{{ link.id }}" data-value=1 onclick="vote(this)">Up</button>
+                    | <button data-type="link" data-id="{{ link.id }}" data-value=-1 onclick="vote(this)">Down</button>
+                {% endif %}
             </p>
         </div>
     {% empty %}
@@ -32,4 +34,17 @@
     <div>
         <p>{% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">more</a>{% endif %}</p>
     </div>
+    <script>
+        function vote(btn){
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", '/vote/', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+            xhr.send(JSON.stringify({
+                "type": btn.dataset.type,
+                "id": btn.dataset.id,
+                "value": btn.dataset.value
+            }));
+        }
+    </script>
 {% endblock %}
