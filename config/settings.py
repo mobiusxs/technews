@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'index.apps.IndexConfig',
+    'vote.apps.VoteConfig',
 ]
 
 MIDDLEWARE = [
