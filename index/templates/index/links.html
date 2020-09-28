@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Tech News{% endblock %}
 
@@ -39,17 +40,5 @@
     <div>
         <p>{% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">more</a>{% endif %}</p>
     </div>
-    <script>
-        function vote(btn){
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", '/vote/', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
-            xhr.send(JSON.stringify({
-                "type": btn.dataset.type,
-                "id": btn.dataset.id,
-                "value": btn.dataset.value
-            }));
-        }
-    </script>
+    <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
