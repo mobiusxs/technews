@@ -18,11 +18,16 @@
                         | {{ link.comment_count }} comments
                     {% endif %}
                 </a>
-                {% if request.user == link.author %}
-                    | <a href="{% url 'index:link_delete' link.id %}">delete</a>
+                {% if request.user.is_authenticated %}
+                    {% if request.user == link.author %}
+                        | <a href="{% url 'index:link_delete' link.id %}">delete</a>
+                    {% else %}
+                        | <button data-type="link" data-id="{{ link.id }}" data-value=1 onclick="vote(this)">Up</button>
+                        | <button data-type="link" data-id="{{ link.id }}" data-value=-1 onclick="vote(this)">Down</button>
+                    {% endif %}
                 {% else %}
-                    | <button data-type="link" data-id="{{ link.id }}" data-value=1 onclick="vote(this)">Up</button>
-                    | <button data-type="link" data-id="{{ link.id }}" data-value=-1 onclick="vote(this)">Down</button>
+                    | <button onclick="location.href='{% url 'account_login' %}'">Up</button>
+                    | <button onclick="location.href='{% url 'account_login' %}'">Down</button>
                 {% endif %}
             </p>
         </div>
