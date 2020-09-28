@@ -7,14 +7,18 @@
     {% for comment in object_list %}
         <div>
             <p>
-                <a href="{% url 'index:profile' comment.author.username %}">{{ comment.author.username }}</a>
-                {{ comment.created|timesince }} ago
-                {% if request.user == comment.author %}
-                    | <a href="{% url 'index:comment_update' comment.id %}">edit</a>
-                    | <a href="{% url 'index:comment_delete' comment.id %}">delete</a>
+                <a href="{% url 'index:profile' comment.author.username %}">{{ comment.author.username }}</a> {{ comment.created|timesince }} ago
+                {% if request.user.is_authenticated %}
+                    {% if request.user == comment.author %}
+                        | <a href="{% url 'index:comment_update' comment.id %}">edit</a>
+                        | <a href="{% url 'index:comment_delete' comment.id %}">delete</a>
+                    {% else %}
+                        | <button data-type="link" data-id="{{ link.id }}" data-value=1 data-csrf="{{csrf_token}}" onclick="vote(this)">Up</button>
+                        | <button data-type="link" data-id="{{ link.id }}" data-value=-1 data-csrf="{{csrf_token}}" onclick="vote(this)">Down</button>
+                    {% endif %}
                 {% else %}
-                    | <button data-type="comment" data-id="{{ comment.id }}" data-value=1 onclick="vote(this)">Up</button>
-                    | <button data-type="comment" data-id="{{ comment.id }}" data-value=-1 onclick="vote(this)">Down</button>
+                    | <button onclick="location.href='{% url 'account_login' %}'">Up</button>
+                    | <button onclick="location.href='{% url 'account_login' %}'">Down</button>
                 {% endif %}
             </p>
             <p>{{ comment.text }}</p>
