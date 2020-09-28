@@ -7,15 +7,15 @@
         <div>
             <p>{{ forloop.counter0|add:page_obj.start_index }}. <a href="{{ link.url }}">{{ link.text }}</a></p>
             <p>
-                by <a href="{% url 'index:profile' link.author.username %}">{{ link.author.username }}</a> |
-                {{ link.created|timesince }} ago |
+                by <a href="{% url 'index:profile' link.author.username %}">{{ link.author.username }}</a>
+                | {{ link.created|timesince }} ago
                 <a href="{% url 'index:link' link.id %}">
                     {% if link.comment_count == 0 %}
-                        discuss
+                        | discuss
                     {% elif link.comment_count == 1 %}
-                        1 comment
+                        | 1 comment
                     {% else %}
-                        {{ link.comment_count }} comments
+                        | {{ link.comment_count }} comments
                     {% endif %}
                 </a>
                 {% if request.user == link.author %}

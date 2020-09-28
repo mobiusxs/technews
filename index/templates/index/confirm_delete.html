@@ -7,26 +7,21 @@
     {% if comment %}
         <p>
             <a href="{% url 'index:profile' comment.author.username %}">{{ comment.author.username }}</a> {{ comment.created|timesince }} ago
-            {% if request.user == comment.author %}
-                |
-                <a href="{% url 'index:comment_update' comment.id %}">edit</a>
-            {% endif %}
+                {% if request.user == comment.author %}
+                    | <a href="{% url 'index:comment_update' comment.id %}">edit</a>
+                {% endif %}
         </p>
         <p>{{ comment.text }}</p>
-
         <p>Are you sure you want to delete this comment?</p>
-
         <form action="{% url 'index:comment_delete' comment.id%}" method="post">
             {% csrf_token %}
             <input type="submit" value="confirm">
         </form>
-
     {% elif link %}
         <p><a href="{{ link.url }}">{{ link.text }}</a></p>
         <p>
-            by <a href="{% url 'index:profile' link.author.username %}">{{ link.author.username }}</a> |
-            {{ link.created|timesince }} ago |
-            <a href="{% url 'index:link' link.id %}">
+            by <a href="{% url 'index:profile' link.author.username %}">{{ link.author.username }}</a> {{ link.created|timesince }} ago
+            | <a href="{% url 'index:link' link.id %}">
                 {% if link.comment_count == 0 %}
                     discuss
                 {% elif link.comment_count == 1 %}
