@@ -33,8 +33,8 @@
                             | <a href="{% url 'index:comment_update' comment.id %}">edit</a>
                             | <a href="{% url 'index:comment_delete' comment.id %}">delete</a>
                         {% else %}
-                            | <button data-type="link" data-id="{{ link.id }}" data-value=1 data-csrf="{{csrf_token}}" onclick="vote(this)">Up</button>
-                            | <button data-type="link" data-id="{{ link.id }}" data-value=-1 data-csrf="{{csrf_token}}" onclick="vote(this)">Down</button>
+                            | <button data-type="comment" data-id="{{ comment.id }}" data-value=1 data-csrf="{{csrf_token}}" onclick="vote(this)">Up</button>
+                            | <button data-type="comment" data-id="{{ comment.id }}" data-value=-1 data-csrf="{{csrf_token}}" onclick="vote(this)">Down</button>
                         {% endif %}
                     {% else %}
                         | <button onclick="location.href='{% url 'account_login' %}'">Up</button>
