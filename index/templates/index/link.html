@@ -5,13 +5,21 @@
 
 {% block content %}
     <div>
-        <p><a href="{{ link.url }}">{{ link.text }}</a></p>
-        <p>by <a href="{% url 'index:profile' link.author.username %}">{{ link.author.username }}</a>
-            {{ link.created|timesince }} ago
-            {% if request.user == link.author %}
-                |
-                <a href="#">edit</a> |
-                <a href="{% url 'index:link_delete' link.id %}">delete</a>
+        <p>
+            <a href="{{ link.url }}">{{ link.text }}</a>
+        </p>
+        <p>
+            <a href="{% url 'index:profile' link.author.username %}">{{ link.author.username }}</a> {{ link.created|timesince }} ago
+            {% if request.user.is_authenticated %}
+                {% if request.user == link.author %}
+                    | <a href="{% url 'index:link_delete' link.id %}">delete</a>
+                {% else %}
+                    | <button data-type="link" data-id="{{ link.id }}" data-value=1 data-csrf="{{csrf_token}}" onclick="vote(this)">Up</button>
+                    | <button data-type="link" data-id="{{ link.id }}" data-value=-1 data-csrf="{{csrf_token}}" onclick="vote(this)">Down</button>
+                {% endif %}
+            {% else %}
+                | <button onclick="location.href='{% url 'account_login' %}'">Up</button>
+                | <button onclick="location.href='{% url 'account_login' %}'">Down</button>
             {% endif %}
         </p>
     </div>
