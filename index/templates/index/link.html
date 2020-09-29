@@ -9,6 +9,14 @@
             <a href="{{ link.url }}">{{ link.text }}</a>
         </p>
         <p>
+            &nbsp;&nbsp;&nbsp;
+            {% if not link.karma or link.karma == 0 %}
+                0 points
+            {% elif link.karma == 1 or link.karma == -1%}
+                {{ link.karma }} point
+            {% else %}
+                {{ link.karma }} points
+            {% endif %}
             <a href="{% url 'index:profile' link.author.username %}">{{ link.author.username }}</a> {{ link.created|timesince }} ago
             {% if request.user.is_authenticated %}
                 {% if request.user == link.author %}
