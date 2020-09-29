@@ -3,11 +3,10 @@
 {% block title %}edit comment{% endblock %}
 
 {% block content %}
-    <h1>edit comment</h1>
-
-        <form action="{% url 'index:comment_update' comment.id%}" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="confirm">
-        </form>
+    <h2>edit comment</h2>
+    <form action="{% url 'index:comment_update' comment.id%}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="confirm">
+    </form>
 {% endblock %}
