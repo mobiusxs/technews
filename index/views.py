@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, FormView, DeleteView, UpdateView
 from django.urls import reverse
@@ -22,19 +22,30 @@ class LinkListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
+        """Multipurpose overwrite:
+        1. Allow fetching of user-specific link feeds.
+        2. Annotate the comment counts for each link
+        3. Annotate the total karma value for each link
+        4. Apply ordering
+        """
+
         username = self.request.GET.get('u')
         # Use default if o=None or invalid
         ordering = ORDERING.get(self.request.GET.get('o', ''), '-created')
-        if username:
-            queryset = Link.objects.filter(author__username=username).annotate(comment_count=Count('comment')).order_by(ordering)
+
+        if username:  # filter for specific users
+            queryset = Link.objects.filter(author__username=username).annotate(comment_count=Count('comment')).annotate(karma=Sum('linkvote__value')).order_by(ordering)
             return queryset
         else:
-            return Link.objects.annotate(comment_count=Count('comment')).order_by(ordering)
+            return Link.objects.annotate(comment_count=Count('comment')).annotate(karma=Sum('linkvote__value')).order_by(ordering)
 
 
 class LinkDetailView(DetailView):
     template_name = 'index/link.html'
     model = Link
+
+    def get_queryset(self):
+        return Link.objects.annotate(comment_count=Count('comment')).annotate(karma=Sum('linkvote__value'))
 
     def get_context_data(self, **kwargs):
         """Insert the single object into the context dict."""
@@ -51,7 +62,7 @@ class LinkDeleteView(DeleteView):
     template_name_suffix = ''
 
     def get_queryset(self):
-        return Link.objects.annotate(comment_count=Count('comment'))
+        return Link.objects.annotate(comment_count=Count('comment')).annotate(karma=Sum('linkvote__value'))
 
 
 class ProfileView(DetailView):
