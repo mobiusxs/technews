@@ -13,6 +13,8 @@
     </form>
     {% for comment in comments %}
         {% include 'comment/render.html' %}
+    {% empty %}
+        <p>no comments found</p>
     {% endfor %}
     <script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
