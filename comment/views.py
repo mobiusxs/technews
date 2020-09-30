@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, FormView, DeleteView, UpdateView
 from django.urls import reverse
@@ -38,9 +39,9 @@ class CommentListView(ListView):
         # Use default if o=None or invalid
         ordering = ORDERING.get(self.request.GET.get('o', ''), '-datetime')
         if username:
-            return Comment.objects.filter(user__username=username).order_by(ordering)
+            return Comment.objects.filter(user__username=username).annotate(karma=Sum('commentvote__value')).order_by(ordering)
         else:
-            return Comment.objects.all().order_by(ordering)
+            return Comment.objects.annotate(karma=Sum('commentvote__value')).order_by(ordering)
 
 
 class CommentUpdateView(LoginRequiredMixin, UpdateView):
