@@ -1,5 +1,12 @@
 <div>
     <p>
+        {% if not comment.karma or comment.karma == 0 %}
+            0 points
+        {% elif comment.karma == 1 or comment.karma == -1 %}
+            {{ comment.karma }} point
+        {% else %}
+            {{ comment.karma }} points
+        {% endif %}
         <a href="{% url 'user:detail' comment.user.username %}">{{ comment.user.username }}</a> {{ comment.datetime|timesince }} ago
         {% if request.user.is_authenticated %}
             {% if request.user == comment.user %}
