@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
 
-    'index.apps.IndexConfig',
+    'comment.apps.CommentConfig',
+    'thread.apps.ThreadConfig',
+    'user.apps.UserConfig',
     'vote.apps.VoteConfig',
 ]
 
@@ -138,6 +140,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+AUTH_USER_MODEL = 'user.User'
 
 import django_heroku
 django_heroku.settings(locals())

@@ -16,9 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from thread.views import ThreadListView
+
 urlpatterns = [
-    path('', include('index.urls'), name='index'),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
+
+    path('', ThreadListView.as_view(), name='index'),
+    path('comment/', include('comment.urls'), name='comment'),
+    path('thread/', include('thread.urls'), name='thread'),
+    path('user/', include('user.urls'), name='user'),
     path('vote/', include('vote.urls'), name='vote'),
 ]

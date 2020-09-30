@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CommentVote, LinkVote
+from .models import CommentVote, ThreadVote
 
 admin.site.register(CommentVote)
-admin.site.register(LinkVote)
+admin.site.register(ThreadVote)

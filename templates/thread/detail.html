@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ object.text }}{% endblock %}
+
+{% block content %}
+    {% include 'thread/render.html' %}
+    <form action="{% url 'comment:create' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="thread-id" value={{ thread.id }}>
+        {{ form.as_p }}
+        <input type="submit" value="add comment">
+    </form>
+    {% for comment in comments %}
+        {% include 'comment/render.html' %}
+    {% endfor %}
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

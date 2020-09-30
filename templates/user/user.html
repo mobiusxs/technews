@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.username }}{% endblock %}
+
+{% block content %}
+    <p>user: {{ object.username }}</p>
+    <p>created: {{ object.created }}</p>
+    <p>karma: {{ object.karma }}</p>
+{% if request.user.is_authenticated and object.username == request.user.username %}
+    <form action="{% url 'user:update' %}" method="post">
+        {% csrf_token %}
+        <label for="about">
+            <textarea name="about" id="about" placeholder="about" cols="30" rows="10">{{ object.about }}</textarea>
+        </label>
+        <input type="submit" value="update">
+    </form>
+    <p><a href="{% url 'account_change_password' %}">change password</a></p>
+    <p><a href="{% url 'account_email' %}">manage email</a></p>
+{% else %}
+    <p>about: {{ object.about }}</p>
+{% endif %}
+    <p><a href="{% url 'thread:list' %}?u={{ object.username }}">threads</a></p>
+    <p><a href="{% url 'comment:list' %}?u={{ object.username }}">comments</a></p>
+{% endblock %}
