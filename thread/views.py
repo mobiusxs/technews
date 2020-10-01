@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count, Sum
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from django.urls import reverse
 
@@ -32,18 +31,14 @@ class ThreadListView(ListView):
         ordering = ORDERING.get(self.request.GET.get('o', ''), '-datetime')
 
         if username:  # filter for specific users
-            queryset = Thread.objects.filter(user__username=username).annotate(comment_count=Count('comment')).annotate(karma=Sum('threadvote__value')).order_by(ordering)
-            return queryset
+            return Thread.objects.filter(user__username=username).order_by(ordering)
         else:
-            return Thread.objects.annotate(comment_count=Count('comment')).annotate(karma=Sum('threadvote__value')).order_by(ordering)
+            return Thread.objects.order_by(ordering)
 
 
 class ThreadDetailView(DetailView):
     template_name = 'thread/detail.html'
     model = Thread
-
-    def get_queryset(self):
-        return Thread.objects.annotate(comment_count=Count('comment')).annotate(karma=Sum('threadvote__value'))
 
     def get_context_data(self, **kwargs):
         """Insert the single object into the context dict."""
@@ -58,9 +53,6 @@ class ThreadDeleteView(LoginRequiredMixin, DeleteView):
     success_url = '/'
     template_name = 'thread/delete.html'
     template_name_suffix = ''
-
-    def get_queryset(self):
-        return Thread.objects.annotate(comment_count=Count('comment')).annotate(karma=Sum('threadvote__value'))
 
 
 class ThreadCreateView(LoginRequiredMixin, CreateView):
