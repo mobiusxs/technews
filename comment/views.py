@@ -39,9 +39,9 @@ class CommentListView(ListView):
         # Use default if o=None or invalid
         ordering = ORDERING.get(self.request.GET.get('o', ''), '-datetime')
         if username:
-            return Comment.objects.filter(user__username=username).annotate(karma=Sum('commentvote__value')).order_by(ordering)
+            return Comment.objects.filter(user__username=username).order_by(ordering)
         else:
-            return Comment.objects.annotate(karma=Sum('commentvote__value')).order_by(ordering)
+            return Comment.objects.order_by(ordering)
 
 
 class CommentUpdateView(LoginRequiredMixin, UpdateView):
