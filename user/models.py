@@ -8,3 +8,15 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    @property
+    def thread_karma(self):
+        return User.objects.filter(id=self.id).aggregate(thread_karma=models.Sum('thread__threadvote__value'))['thread_karma']
+
+    @property
+    def comment_karma(self):
+        return User.objects.filter(id=self.id).aggregate(comment_karma=models.Sum('comment__commentvote__value'))['comment_karma']
+
+    @property
+    def karma(self):
+        return self.thread_karma + self.comment_karma
