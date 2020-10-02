@@ -3,53 +3,53 @@ from django.contrib.auth.hashers import make_password
 
 data = [
     {
-        'username': 'haradrimmanrope',
-        'password': make_password('haradrimmanrope'),
+        'username': 'doctor',
+        'password': make_password('doctor'),
         'about': '',
     },
     {
-        'username': 'meriadocprobable',
-        'password': make_password('meriadocprobable'),
+        'username': 'engineer',
+        'password': make_password('engineer'),
         'about': '',
     },
     {
-        'username': 'midgewaterprevent',
-        'password': make_password('midgewaterprevent'),
+        'username': 'researcher',
+        'password': make_password('researcher'),
         'about': '',
     },
     {
-        'username': 'oliphauntettenmoors',
-        'password': make_password('oliphauntettenmoors'),
+        'username': 'professor',
+        'password': make_password('professor'),
         'about': '',
     },
     {
-        'username': 'hassanyesterday',
-        'password': make_password('hassanyesterday'),
+        'username': 'lawyer',
+        'password': make_password('lawyer'),
         'about': '',
     },
     {
-        'username': 'berserkdiamonds',
-        'password': make_password('berserkdiamonds'),
+        'username': 'pilot',
+        'password': make_password('pilot'),
         'about': '',
     },
     {
-        'username': 'collectedvein',
-        'password': make_password('collectedvein'),
+        'username': 'student',
+        'password': make_password('student'),
         'about': '',
     },
     {
-        'username': 'mithrandirperegrine',
-        'password': make_password('mithrandirperegrine'),
+        'username': 'architect',
+        'password': make_password('architect'),
         'about': '',
     },
     {
-        'username': 'denyspeedy',
-        'password': make_password('denyspeedy'),
+        'username': 'nurse',
+        'password': make_password('nurse'),
         'about': '',
     },
     {
-        'username': 'drivepickleball',
-        'password': make_password('drivepickleball'),
+        'username': 'diplomat',
+        'password': make_password('diplomat'),
         'about': '',
     },
 ]
