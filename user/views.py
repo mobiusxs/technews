@@ -13,6 +13,8 @@ class UserDetailView(DetailView):
     model = User
 
     def get_object(self, queryset=None):
+        """Enable lookups by username rather than pk"""
+
         username = self.kwargs.get('username')
         return get_object_or_404(User, username=username)
 
@@ -27,6 +29,8 @@ class UserDetailView(DetailView):
 
 @login_required
 def update_about_view(request):
+    """Allow users to update their 'about' blurb on profile view"""
+
     user = User.objects.get(username=request.user.username)
     user.about = request.POST.get('about')
     user.save()
