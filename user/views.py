@@ -22,8 +22,8 @@ class UserDetailView(DetailView):
         """Enable displaying comment and thread karma totals on user profile view"""
 
         context = super().get_context_data(**kwargs)
-        context['thread_karma'] = User.objects.filter(id=self.object.id).aggregate(comment_karma=Sum('comment__commentvote__value'))['comment_karma']
-        context['comment_karma'] = User.objects.filter(id=self.object.id).aggregate(thread_karma=Sum('thread__threadvote__value'))['thread_karma']
+        context['comment_karma'] = User.objects.filter(id=self.object.id).aggregate(comment_karma=Sum('comment__commentvote__value'))['comment_karma']
+        context['thread_karma'] = User.objects.filter(id=self.object.id).aggregate(thread_karma=Sum('thread__threadvote__value'))['thread_karma']
         return context
 
 
