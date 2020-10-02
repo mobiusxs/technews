@@ -5,8 +5,8 @@
 {% block content %}
     <p>user: {{ object.username }}</p>
     <p>created: {{ object.created }}</p>
-    <p>thread karma: {{ thread_karma }}</p>
-    <p>comment karma: {{ comment_karma }}</p>
+    <p>thread karma: {{ object.thread_karma }}</p>
+    <p>comment karma: {{ object.comment_karma }}</p>
 {% if request.user.is_authenticated and object.username == request.user.username %}
     <form action="{% url 'user:update' %}" method="post">
         {% csrf_token %}
