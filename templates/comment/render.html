@@ -8,6 +8,9 @@
             {{ comment.karma }} points
         {% endif %}
         <a href="{% url 'user:detail' comment.user.username %}">{{ comment.user.username }}</a> {{ comment.datetime|timesince }} ago
+        {% if request.path == '/comment/list' %}
+            | <a href="{% url 'thread:detail' comment.thread_id %}">thread</a>
+        {% endif %} 
         {% if request.user.is_authenticated %}
             {% if request.user == comment.user %}
                 | <a href="{% url 'comment:update' comment.id %}">edit</a>
