@@ -30,8 +30,8 @@ class ThreadManager(models.Manager):
 
         qs = super().get_queryset()
         return qs.annotate(
-            comment_count=RawSQL("""SELECT Count(comment_comment.id) FROM comment_comment WHERE thread_thread.id = comment_comment.thread_id""", ()),
-            karma=RawSQL("""SELECT Sum(vote_threadvote.value) FROM vote_threadvote WHERE thread_thread.id = vote_threadvote.thread_id""", ()),
+            comment_count=RawSQL("""SELECT Count(id) FROM comment_comment WHERE thread_thread.id = comment_comment.thread_id""", ()),
+            karma=RawSQL("""SELECT Sum(value) FROM vote_threadvote WHERE thread_thread.id = vote_threadvote.thread_id""", ()),
         )
 
 
