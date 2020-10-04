@@ -3,7 +3,7 @@
         {% if forloop %}
             {{ forloop.counter0|add:page_obj.start_index }}.
         {% endif %}
-        <a href="{{ thread.url }}">{{ thread.text }}</a></p>
+        <a href="{{ thread.url }}">{{ thread.text }}</a> {% if thread.domain %}<span>({{ thread.domain }})</span>{% endif %}</p>
     <p>
         &nbsp;&nbsp;&nbsp;
         {% if not thread.karma or thread.karma == 0 %}
