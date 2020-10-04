@@ -1,3 +1,5 @@
+from urllib.parse import urlparse
+
 from django.db import models
 
 from user.models import User
@@ -26,3 +28,12 @@ class Thread(models.Model):
     @property
     def comment_count(self):
         return Thread.objects.filter(id=self.id).aggregate(comment_count=models.Count('comment__id'))['comment_count']
+
+    @property
+    def domain(self):
+        if self.url:
+            netloc = urlparse(self.url).netloc
+            netloc = netloc.replace('www.', '')
+            return netloc
+        else:
+            return None
