@@ -1,0 +1,51 @@
+main {
+    min-height: 80vh
+}
+
+.thread-card {
+    display: flex;
+    flex-direction: row;
+    border: none;
+}
+
+.thread-card > div {
+    padding: 10px;
+}
+
+.comment-card {
+    display: flex;
+    flex-direction: column;
+    border: none;
+    padding: 15px 0;
+}
+
+.comment-header {
+    display: flex;
+    flex-direction: row;
+}
+
+.comment-votes {
+    display: flex;
+    flex-direction: column;
+    padding-right: 10px;
+    width: 25px;
+}
+
+.comment-body {
+    display: flex;
+    flex-direction: row;
+}
+
+.comment-body-offset {
+    padding-right: 10px;
+    width: 25px;
+}
+
+.thread-votes {
+    display: flex;
+    flex-direction: column;
+}
+
+.danger-text {
+    color: red;
+}
