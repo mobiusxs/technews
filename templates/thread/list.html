@@ -7,7 +7,9 @@
     {% for thread in object_list %}
         {% include 'thread/render.html' %}
     {% empty %}
-        <p>No links found</p>
+    <div class="alert alert-success mt-5" role="alert">
+        <p>No threads found.</p>
+    </div>
     {% endfor %}
     {% include 'partials/pagination.html' %}
     <script src="{% static 'js/script.js' %}"></script>

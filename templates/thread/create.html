@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
-{% block title %}Submit Link{% endblock %}
+{% block title %}Submit{% endblock %}
 
 {% block content %}
+    <h1>Submit Content</h1>
     <form action="{% url 'thread:create' %}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="submit">
+        {{ form|crispy }}
+        <input class="btn btn-primary mt-2" type="submit" value="submit">
     </form>
 {% endblock %}

@@ -3,8 +3,8 @@
 {% block title %}{{ object.username }}{% endblock %}
 
 {% block content %}
-    <p>user: {{ object.username }}</p>
-    <p>created: {{ object.created }}</p>
+    <p>username: {{ object.username }}</p>
+    <p>joined: {{ object.date_joined }}</p>
     <p>thread karma: {{ object.thread_karma }}</p>
     <p>comment karma: {{ object.comment_karma }}</p>
 {% if request.user.is_authenticated and object.username == request.user.username %}
@@ -15,11 +15,11 @@
         </label>
         <input type="submit" value="update">
     </form>
-    <p><a href="{% url 'account_change_password' %}">change password</a></p>
-    <p><a href="{% url 'account_email' %}">manage email</a></p>
+    <p><a class="text-decoration-none" href="{% url 'account_change_password' %}">change password</a></p>
+    <p><a class="text-decoration-none" href="{% url 'account_email' %}">manage email</a></p>
 {% else %}
     <p>about: {{ object.about }}</p>
 {% endif %}
-    <p><a href="{% url 'thread:list' %}?u={{ object.username }}">threads</a></p>
-    <p><a href="{% url 'comment:list' %}?u={{ object.username }}">comments</a></p>
+    <p><a class="text-decoration-none" href="{% url 'thread:list' %}?u={{ object.username }}">threads</a></p>
+    <p><a class="text-decoration-none" href="{% url 'comment:list' %}?u={{ object.username }}">comments</a></p>
 {% endblock %}
