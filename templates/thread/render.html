@@ -1,38 +1,46 @@
-<div>
-    <p>
-        {% if forloop %}
-            {{ forloop.counter0|add:page_obj.start_index }}.
-        {% endif %}
-        <a href="{{ thread.url }}">{{ thread.text }}</a> {% if thread.domain %}<span>({{ thread.domain }})</span>{% endif %}</p>
-    <p>
-        &nbsp;&nbsp;&nbsp;
-        {% if not thread.karma or thread.karma == 0 %}
-            0 points
-        {% elif thread.karma == 1 or thread.karma == -1 %}
-            {{ thread.karma }} point
-        {% else %}
-            {{ thread.karma }} points
-        {% endif %}
-        <a href="{% url 'user:detail' thread.user.username %}">{{ thread.user.username }}</a> {{ thread.datetime|timesince }} ago
-        <a href="{% url 'thread:detail' thread.id %}">
-            {% if thread.comment_count == 0 %}
-                | discuss
-            {% elif thread.comment_count == 1 %}
-                | 1 comment
-            {% else %}
-                | {{ thread.comment_count }} comments
+<div class="card border-light">
+    <div class="card-body">
+        <p class="card-title">
+            {% if forloop %}
+                <span>{{ forloop.counter0|add:page_obj.start_index }}.</span>
             {% endif %}
-        </a>
-        {% if request.user.is_authenticated %}
-            {% if request.user == thread.user %}
-                | <a href="{% url 'thread:delete' thread.id %}">delete</a>
+            <strong>
+                <a class="text-success text-decoration-none" href="{{ thread.url }}">{{ thread.text }}</a>
+            </strong>
+            <small class="text-muted">({{ thread.domain }})</small>
+        </p>
+        <p class="card-text">
+            <small class="text-muted">
+            {% if not thread.karma or thread.karma == 0 %}
+                0 points
+            {% elif thread.karma == 1 or thread.karma == -1 %}
+                {{ thread.karma }} point
             {% else %}
-                | <button data-type="thread" data-id="{{ thread.id }}" data-value=1 data-csrf="{{csrf_token}}" onclick="vote(this)">Up</button>
-                | <button data-type="thread" data-id="{{ thread.id }}" data-value=-1 data-csrf="{{csrf_token}}" onclick="vote(this)">Down</button>
+                {{ thread.karma }} points
             {% endif %}
-        {% else %}
-            | <button onclick="location.href='{% url 'account_login' %}'">Up</button>
-            | <button onclick="location.href='{% url 'account_login' %}'">Down</button>
-        {% endif %}
-    </p>
+            <a class="text-decoration-none" href="{% url 'user:detail' thread.user.username %}">{{ thread.user.username }}</a>
+            {{ thread.datetime|timesince }} ago
+            <a class="text-decoration-none" href="{% url 'thread:detail' thread.id %}">
+                {% if thread.comment_count == 0 %}
+                    discuss
+                {% elif thread.comment_count == 1 %}
+                    1 comment
+                {% else %}
+                    {{ thread.comment_count }} comments
+                {% endif %}
+            </a>
+            {% if request.user.is_authenticated %}
+                {% if request.user == thread.user %}
+                    <a href="{% url 'thread:delete' thread.id %}">delete</a>
+                {% else %}
+                    <button data-type="thread" data-id="{{ thread.id }}" data-value=1 data-csrf="{{csrf_token}}" onclick="vote(this)">Up</button>
+                    <button data-type="thread" data-id="{{ thread.id }}" data-value=-1 data-csrf="{{csrf_token}}" onclick="vote(this)">Down</button>
+                {% endif %}
+            {% else %}
+                <button onclick="location.href='{% url 'account_login' %}'">Up</button>
+                <button onclick="location.href='{% url 'account_login' %}'">Down</button>
+            {% endif %}
+            </small>
+        </p>
+    </div>
 </div>

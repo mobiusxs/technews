@@ -1,3 +1,7 @@
-<div>
-    <p>{% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">more</a>{% endif %}</p>
-</div>
+<nav aria-label="...">
+    <p class="pagination">
+    {% if page_obj.has_next %}
+        <a class="page-link border-light" href="?page={{ page_obj.next_page_number }}">more</a>
+    {% endif %}
+    </p>
+</nav>
