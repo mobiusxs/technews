@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
 
-{% block title %}edit comment{% endblock %}
+{% block title %}Edit Comment{% endblock %}
 
 {% block content %}
-    <h2>edit comment</h2>
+    <h2>Edit Comment</h2>
     <form action="{% url 'comment:update' comment.id%}" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="confirm">
+        {{ form|crispy }}
+        <input class="btn btn-primary" type="submit" value="Confirm">
     </form>
 {% endblock %}

@@ -1,5 +1,6 @@
-<div>
-    <p>
+<div class="mt-4">
+    <p class="card-text">
+        <small class="text-muted">
         {% if not comment.karma or comment.karma == 0 %}
             0 points
         {% elif comment.karma == 1 or comment.karma == -1 %}
@@ -7,22 +8,25 @@
         {% else %}
             {{ comment.karma }} points
         {% endif %}
-        <a href="{% url 'user:detail' comment.user.username %}">{{ comment.user.username }}</a> {{ comment.datetime|timesince }} ago
+        <a class="text-decoration-none" href="{% url 'user:detail' comment.user.username %}">{{ comment.user.username }}</a> {{ comment.datetime|timesince }} ago
         {% if request.path == '/comment/list' %}
-            | <a href="{% url 'thread:detail' comment.thread_id %}">thread</a>
+            <a class="text-decoration-none" href="{% url 'thread:detail' comment.thread_id %}">thread</a>
         {% endif %} 
         {% if request.user.is_authenticated %}
             {% if request.user == comment.user %}
-                | <a href="{% url 'comment:update' comment.id %}">edit</a>
-                | <a href="{% url 'comment:delete' comment.id %}">delete</a>
+                <a class="text-decoration-none" href="{% url 'comment:update' comment.id %}">edit</a>
+                <a class="text-decoration-none" href="{% url 'comment:delete' comment.id %}">delete</a>
             {% else %}
-                | <button data-type="comment" data-id="{{ comment.id }}" data-value=1 data-csrf="{{csrf_token}}" onclick="vote(this)">Up</button>
-                | <button data-type="comment" data-id="{{ comment.id }}" data-value=-1 data-csrf="{{csrf_token}}" onclick="vote(this)">Down</button>
+                <button data-type="comment" data-id="{{ comment.id }}" data-value=1 data-csrf="{{csrf_token}}" onclick="vote(this)">Up</button>
+                <button data-type="comment" data-id="{{ comment.id }}" data-value=-1 data-csrf="{{csrf_token}}" onclick="vote(this)">Down</button>
             {% endif %}
         {% else %}
-            | <button onclick="location.href='{% url 'account_login' %}'">Up</button>
-            | <button onclick="location.href='{% url 'account_login' %}'">Down</button>
+            <button onclick="location.href='{% url 'account_login' %}'">Up</button>
+            <button onclick="location.href='{% url 'account_login' %}'">Down</button>
         {% endif %}
+        </small>
     </p>
-    <p>{{ comment.text }}</p>
+    <p>
+        {{ comment.text }}
+    </p>
 </div>
