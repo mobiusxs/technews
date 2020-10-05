@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('', ThreadListView.as_view(), name='index'),
     path('comment/', include('comment.urls'), name='comment'),
+    path('pages/', include('pages.urls'), name='pages'),
     path('thread/', include('thread.urls'), name='thread'),
     path('user/', include('user.urls'), name='user'),
     path('vote/', include('vote.urls'), name='vote'),
