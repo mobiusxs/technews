@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'comment.apps.CommentConfig',
+    'pages.apps.PagesConfig',
     'thread.apps.ThreadConfig',
     'user.apps.UserConfig',
     'vote.apps.VoteConfig',
