@@ -11,11 +11,13 @@ class User(AbstractUser):
 
     @property
     def thread_karma(self):
-        return User.objects.filter(id=self.id).aggregate(thread_karma=models.Sum('thread__threadvote__value'))['thread_karma']
+        k = User.objects.filter(id=self.id).aggregate(k=models.Sum('thread__threadvote__value'))['k']
+        return 0 if not k else k
 
     @property
     def comment_karma(self):
-        return User.objects.filter(id=self.id).aggregate(comment_karma=models.Sum('comment__commentvote__value'))['comment_karma']
+        k = User.objects.filter(id=self.id).aggregate(k=models.Sum('comment__commentvote__value'))['k']
+        return 0 if not k else k
 
     @property
     def karma(self):
