@@ -46,6 +46,14 @@ main {
     flex-direction: column;
 }
 
+.vote-icon:hover {
+    color: #71FF00;
+}
+
+.voted {
+    color: #71FF00;
+}
+
 .danger-text {
     color: red;
 }
