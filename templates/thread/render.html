@@ -12,8 +12,8 @@
                 <div><i class="fas fa-caret-down"></i></div>
             {% else %}
                 {# Logged in and can vote #}
-                <div data-type="thread" data-id="{{ thread.id }}" data-value=1 data-csrf="{{csrf_token}}" onclick="vote(this)"><i class="fas fa-caret-up"></i></div>
-                <div data-type="thread" data-id="{{ thread.id }}" data-value=-1 data-csrf="{{csrf_token}}" onclick="vote(this)"><i class="fas fa-caret-down"></i></div>
+                <div id="thread-{{ thread.id }}-up" class="vote-icon" data-csrf="{{csrf_token}}" onclick="vote(this)"><i class="fas fa-caret-up"></i></div>
+                <div id="thread-{{ thread.id }}-down" class="vote-icon" data-csrf="{{csrf_token}}" onclick="vote(this)"><i class="fas fa-caret-down"></i></div>
             {% endif %}
         {% else %}
             {# Redirected to log in view #}
@@ -32,13 +32,15 @@
         </p>
         <p class="card-text">
             <small class="text-muted">
-            {% if not thread.karma or thread.karma == 0 %}
-                0 points
-            {% elif thread.karma == 1 or thread.karma == -1 %}
-                {{ thread.karma }} point
-            {% else %}
-                {{ thread.karma }} points
-            {% endif %}
+                <span id="thread-{{ thread.id }}-karma" data-state="null">
+                    {% if not thread.karma or thread.karma == 0 %}
+                        0 points
+                    {% elif thread.karma == 1 or thread.karma == -1 %}
+                        {{ thread.karma }} point
+                    {% else %}
+                        {{ thread.karma }} points
+                    {% endif %}
+                </span>
             <a class="text-decoration-none" href="{% url 'user:detail' thread.user.username %}">{{ thread.user.username }}</a>
             {{ thread.datetime|timesince }} ago
             <a class="text-decoration-none" href="{% url 'thread:detail' thread.id %}">

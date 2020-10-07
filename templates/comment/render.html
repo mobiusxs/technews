@@ -9,8 +9,8 @@
                 <div><i class="fas fa-caret-down"></i></div>
             {% else %}
                 {# Logged in and can vote #}
-                <div data-type="comment" data-id="{{ comment.id }}" data-value=1 data-csrf="{{csrf_token}}" onclick="vote(this)"><i class="fas fa-caret-up"></i></div>
-                <div data-type="comment" data-id="{{ comment.id }}" data-value=-1 data-csrf="{{csrf_token}}" onclick="vote(this)"><i class="fas fa-caret-down"></i></div>
+                <div id="comment-{{ comment.id }}-up" class="vote-icon" data-csrf="{{csrf_token}}" onclick="vote(this)"><i class="fas fa-caret-up"></i></div>
+                <div id="comment-{{ comment.id }}-down" class="vote-icon" data-csrf="{{csrf_token}}" onclick="vote(this)"><i class="fas fa-caret-down"></i></div>
             {% endif %}
         {% else %}
             {# Redirected to log in view #}
@@ -22,13 +22,15 @@
         <div class="meta">
             <p>
                 <small class="text-muted">
-                {% if not comment.karma or comment.karma == 0 %}
-                    0 points
-                {% elif comment.karma == 1 or comment.karma == -1 %}
-                    {{ comment.karma }} point
-                {% else %}
-                    {{ comment.karma }} points
-                {% endif %}
+                    <span id="comment-{{ comment.id }}-karma" data-state="null">
+                        {% if not comment.karma or comment.karma == 0 %}
+                            0 points
+                        {% elif comment.karma == 1 or comment.karma == -1 %}
+                            {{ comment.karma }} point
+                        {% else %}
+                            {{ comment.karma }} points
+                        {% endif %}
+                    </span>
                 <a class="text-decoration-none" href="{% url 'user:detail' comment.user.username %}">{{ comment.user.username }}</a> {{ comment.datetime|timesince }} ago
                 {% if request.path == '/comment/list' %}
                     <a class="text-decoration-none" href="{% url 'thread:detail' comment.thread_id %}">thread</a>
