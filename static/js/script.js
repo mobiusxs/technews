@@ -22,7 +22,7 @@ function vote(btn){
  * Send the vote to the server as a POST request
  *
  * @param  {String} type Can be one of [thread, comment]
- * @param  {String} id The id for the content being voted on
+ * @param  {String} id   The id for the content being voted on
  * @param  {String} vote Can be one of [up, down]
  * @param  {String} csrf CSRF token passed into the template
  */
@@ -54,10 +54,10 @@ function vote_server(type, id, vote, csrf){
  * There are 3 possible states [null, up, down]
  * and 6 possible state transitions.
  *
- * @param  {Element} karma_element The element displaying the karma value
- * @param  {Element} upvote_element The upvote icon
+ * @param  {Element} karma_element    The element displaying the karma value
+ * @param  {Element} upvote_element   The upvote icon
  * @param  {Element} downvote_element The downvote icon
- * @param  {String} vote Can be one of [up, down]
+ * @param  {String}  vote             Can be one of [up, down]
  */
 function vote_client(karma_element, upvote_element, downvote_element, vote){
     const start_state = karma_element.dataset.state;
