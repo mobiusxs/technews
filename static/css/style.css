@@ -24,13 +24,6 @@ main {
     flex-direction: row;
 }
 
-.comment-votes {
-    display: flex;
-    flex-direction: column;
-    padding-right: 10px;
-    width: 25px;
-}
-
 .comment-body {
     display: flex;
     flex-direction: row;
@@ -41,9 +34,14 @@ main {
     width: 25px;
 }
 
-.thread-votes {
+.vote-icon-wrapper {
     display: flex;
     flex-direction: column;
+    padding-right: 10px;
+}
+
+.vote-icon {
+    color: #6c757d;
 }
 
 .vote-icon:hover {
@@ -54,6 +52,10 @@ main {
     color: #71FF00;
 }
 
-.danger-text {
+.danger-text:hover {
     color: red;
+}
+
+a:hover {
+    text-decoration: none;
 }
