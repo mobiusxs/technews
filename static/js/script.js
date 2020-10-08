@@ -61,9 +61,8 @@ function vote_server(type, id, vote, csrf){
  */
 function vote_client(karma_element, upvote_element, downvote_element, vote){
     const start_state = karma_element.dataset.state;
-    const [k, _] = karma_element.innerText.split(' ');
-    let karma_value = parseInt(k);
     const classname = 'voted';
+    let karma_value = parseInt(karma_element.innerText.split(' ')[0]);
     let end_state = start_state;
 
     /**
