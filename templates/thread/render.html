@@ -4,12 +4,12 @@
         <p>{{ forloop.counter0|add:page_obj.start_index }}.</p>
     </div>
 {% endif %}
-    <div class="thread-votes">
+    <div class="vote-icon-wrapper">
         {% if request.user.is_authenticated %}
             {% if request.user == thread.user %}
                 {# Buttons are displayed but inert as user cannot vote on own content #}
-                <div><i class="fas fa-caret-up"></i></div>
-                <div><i class="fas fa-caret-down"></i></div>
+                <div class="vote-icon"><i class="fas fa-caret-up"></i></div>
+                <div class="vote-icon"><i class="fas fa-caret-down"></i></div>
             {% else %}
                 {# Logged in and can vote #}
                 <div id="thread-{{ thread.id }}-up" class="vote-icon" data-csrf="{{csrf_token}}" onclick="vote(this)"><i class="fas fa-caret-up"></i></div>
@@ -17,14 +17,14 @@
             {% endif %}
         {% else %}
             {# Redirected to log in view #}
-            <div onclick="location.href='{% url 'account_login' %}'"><i class="fas fa-caret-up"></i></div>
-            <div onclick="location.href='{% url 'account_login' %}'"><i class="fas fa-caret-down"></i></div>
+            <div class="vote-icon" onclick="location.href='{% url 'account_login' %}'"><i class="fas fa-caret-up"></i></div>
+            <div class="vote-icon" onclick="location.href='{% url 'account_login' %}'"><i class="fas fa-caret-down"></i></div>
         {% endif %}
     </div>
     <div>
         <p class="card-title">
             <strong>
-                <a class="text-success text-decoration-none" href="{{ thread.url }}">{{ thread.text }}</a>
+                <a class="text-success" href="{{ thread.url }}">{{ thread.text }}</a>
             </strong>
             <small class="text-muted">
                 ({{ thread.domain }})
@@ -41,9 +41,9 @@
                         {{ thread.karma }} points
                     {% endif %}
                 </span>
-            <a class="text-decoration-none" href="{% url 'user:detail' thread.user.username %}">{{ thread.user.username }}</a>
+            <a href="{% url 'user:detail' thread.user.username %}">{{ thread.user.username }}</a>
             {{ thread.datetime|timesince }} ago
-            <a class="text-decoration-none" href="{% url 'thread:detail' thread.id %}">
+            <a href="{% url 'thread:detail' thread.id %}">
                 {% if thread.comment_count == 0 %}
                     discuss
                 {% elif thread.comment_count == 1 %}
@@ -53,7 +53,7 @@
                 {% endif %}
             </a>
                 {% if request.user == thread.user %}
-                    - <a href="{% url 'thread:delete' thread.id %}"><span class="danger-text">delete</span></a>
+                    - <a class="danger-text" href="{% url 'thread:delete' thread.id %}">delete</a>
                 {% endif %}
             </small>
         </p>

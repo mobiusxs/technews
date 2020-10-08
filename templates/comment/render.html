@@ -1,12 +1,11 @@
 <div class="card comment-card">
     <div class="comment-header">
-        <div class="comment-votes">
-
+        <div class="vote-icon-wrapper">
         {% if request.user.is_authenticated %}
             {% if request.user == comment.user %}
                 {# Buttons are displayed but inert as user cannot vote on own content #}
-                <div><i class="fas fa-caret-up"></i></div>
-                <div><i class="fas fa-caret-down"></i></div>
+                <div class="vote-icon"><i class="fas fa-caret-up"></i></div>
+                <div class="vote-icon"><i class="fas fa-caret-down"></i></div>
             {% else %}
                 {# Logged in and can vote #}
                 <div id="comment-{{ comment.id }}-up" class="vote-icon" data-csrf="{{csrf_token}}" onclick="vote(this)"><i class="fas fa-caret-up"></i></div>
@@ -14,10 +13,9 @@
             {% endif %}
         {% else %}
             {# Redirected to log in view #}
-            <div onclick="location.href='{% url 'account_login' %}'"><i class="fas fa-caret-up"></i></div>
-            <div onclick="location.href='{% url 'account_login' %}'"><i class="fas fa-caret-down"></i></div>
+            <div class="vote-icon" onclick="location.href='{% url 'account_login' %}'"><i class="fas fa-caret-up"></i></div>
+            <div class="vote-icon" onclick="location.href='{% url 'account_login' %}'"><i class="fas fa-caret-down"></i></div>
         {% endif %}
-
         </div>
         <div class="meta">
             <p>
@@ -31,13 +29,13 @@
                             {{ comment.karma }} points
                         {% endif %}
                     </span>
-                <a class="text-decoration-none" href="{% url 'user:detail' comment.user.username %}">{{ comment.user.username }}</a> {{ comment.datetime|timesince }} ago
+                <a href="{% url 'user:detail' comment.user.username %}">{{ comment.user.username }}</a> {{ comment.datetime|timesince }} ago
                 {% if request.path == '/comment/list' %}
-                    <a class="text-decoration-none" href="{% url 'thread:detail' comment.thread_id %}">thread</a>
+                    <a href="{% url 'thread:detail' comment.thread_id %}">thread</a>
                 {% endif %}
                 {% if request.user == comment.user %}
-                    - <a class="text-decoration-none" href="{% url 'comment:update' comment.id %}"><span class="danger-text">edit</span></a>
-                    - <a class="text-decoration-none" href="{% url 'comment:delete' comment.id %}"><span class="danger-text">delete</span></a>
+                    - <a class="danger-text" href="{% url 'comment:update' comment.id %}">edit</a>
+                    - <a class="danger-text" href="{% url 'comment:delete' comment.id %}">delete</a>
                 {% endif %}
                 </small>
             </p>
